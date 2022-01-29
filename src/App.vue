@@ -4,11 +4,12 @@
       <h1>Habito {{ activeYear }}</h1>
     </nav>
 
-    <div class="text-xs flex gap-1 overflow-auto p-2">
+    <div class="text-xs flex overflow-auto">
+      <div class="w-40"></div>
       <button
-        class="px-3 py-1 transition-colors rounded-md hover:bg-slate-50"
+        class="h-8 p-2 transition-colors hover:bg-slate-50"
         :class="{
-          'bg-slate-50 ring-1 ring-slate-300': activeMonth.id === m.id,
+          'bg-slate-100 font-medium': activeMonth.id === m.id,
         }"
         v-for="m in months"
         @click="clickMonth(m)"
@@ -17,9 +18,13 @@
       </button>
     </div>
 
-    <h2>HABIT</h2>
     <div class="flex">
       <div class="flex flex-col w-40">
+        <h2
+          class="h-8 text-xs tracking-widest bg-slate-100 flex items-center px-4"
+        >
+          HABIT
+        </h2>
         <input
           v-for="h in habits"
           v-model="habits[h.id].name"
@@ -34,6 +39,14 @@
         </button>
       </div>
       <div class="flex flex-col flex-grow overflow-auto">
+        <div class="flex items-center">
+          <div
+            class="w-8 h-8 flex items-center justify-center text-xs bg-slate-100"
+            v-for="day in activeMonth.days"
+          >
+            {{ day }}
+          </div>
+        </div>
         <div v-for="row in habits" class="inline-flex">
           <input
             v-for="item in activeMonth.days"
@@ -222,7 +235,7 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss">
 .habit {
   @apply ring-1 ring-inset ring-slate-300 px-2 h-8 w-40 hover:ring-blue-300 focus:ring-blue-500 transition-all;
 }
@@ -232,6 +245,9 @@ input[type="checkbox"] {
   @apply border w-8 h-8;
   display: grid;
   place-content: center;
+  &:hover {
+    @apply bg-slate-100;
+  }
 }
 input[type="checkbox"]::before {
   content: "";
